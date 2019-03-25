@@ -1,0 +1,10 @@
+memo, 0
+scientific, 1
+form, 2
+resume, 3
+report, 4
+news, 5
+adve, 6
+letter, 7
+note, 8
+email, 9
