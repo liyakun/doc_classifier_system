@@ -1,0 +1,51 @@
+version: "3.2"
+services:
+    rabbitmq-server:
+        build: ./rabbitmq-server
+        networks:
+          - doc-classifier
+    ocr:
+      build: ./classifier
+      depends_on:
+        - rabbitmq-server
+      tty: true
+      ports:
+        - "9996:9996"
+      volumes:
+        - './classifier:/classifier'
+      networks:
+        - doc-classifier
+
+    classifier:
+      build: ./classifier
+      depends_on:
+        - rabbitmq-server
+      tty: true
+      ports:
+        - "9998:9998"
+      volumes:
+        - './classifier:/classifier'
+      networks:
+        - doc-classifier
+
+    ui:
+      build: ./ui
+      depends_on:
+        - rabbitmq-server
+        - classifier
+        - ocr
+      tty: true
+      ports:
+        - "9999:9999"
+      volumes:
+        - './ui:/ui'
+      networks:
+        - doc-classifier
+
+volumes:
+    classifier:
+    ocr:
+    ui:
+
+networks:
+    doc-classifier:
