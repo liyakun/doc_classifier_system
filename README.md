@@ -14,20 +14,21 @@ The model was trained by fine tuning available train AlexNet dnn model.
 * prepare data using jupyter-notebook `model_learn/confs/utils/data_result_analysis.ipynb`
 * retrain model using `model_learn/confs/pixel_mean_sub_shuffle/train.sh`
 
-You could use the provided `model_learn/downloader.sh` to download images and model.
+You could have a look at the training result at `model_learn/confs/utils/data_result_analysis.ipynb`. 
+The provided `model_learn/downloader.sh` could be used to download images and model.
 
 ##### UI
 The `ui` folder contains code for ui component.
 
 The frontend ui provides the following functionality:
 * upload image
-* call backend to return classification and ocr results
+* callback to return classification and ocr results
 
 ##### OCR
 
 The `ocr` folder contains code for ocr component.
 
-The POST api provides the following functionality:
+The `ocr` component provides the following functionality:
 * receive image from `classifier`
 * return ocr results to `classifier`
 
@@ -35,11 +36,26 @@ The POST api provides the following functionality:
 
 The `classifier` folder contains code for classifier component.
 
-The POST api provides the following functionality:
+The `classifier` provides the following functionality:
 * receive image from `ui`
 * return classification results to `ui`
 
 #### Deployment
-The deployment is done using docker-compose.
 
-##### Docker Compose
+The deployment is done through docker, therefore, it is required to have docker and docker-compose installed.
+You could use the provided bash script to deploy the three components.
+
+1. clone the repository
+    ```bash
+    git clone https://gitlab.com/yakun/doc_classifier_system.git
+    cd ./doc_classifier_system && git checkout remotes/origin/rabbitmq
+    ```
+
+2. download trained model
+    ```bash
+    sh downloader.sh
+    ```
+3. run docker-compose.yml
+    ```bash
+    sh run.sh
+    ```

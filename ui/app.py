@@ -10,7 +10,6 @@ from lib.send_image import UIImageSender
 app = Flask(__name__)
 app.secret_key = 'lkasjdfi3jeofiwjfowflmksfdsoifjsi#@$%@%#$%'
 CORS(app)
-CLASSIFIER_API = 'http://0.0.0.0:9998/'
 RABBIT_HOST = os.environ['RABBIT_HOST']
 
 
