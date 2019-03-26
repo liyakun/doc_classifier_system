@@ -1,6 +1,7 @@
 import pytesseract
 from PIL import Image
 
+
 class OCR:
     def __init__(self):
         pass
@@ -10,5 +11,5 @@ class OCR:
         """
         ocr from input image
         """
-        text = pytesseract.image_to_string(Image.open(image_f).convert('L'))
+        text = pytesseract.image_to_string(Image.fromarray(image_f).convert('L'))
         return text

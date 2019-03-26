@@ -3,11 +3,25 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Classify Image</title>
+	<style>
+		* {
+		  box-sizing: border-box;
+		}
+
+		/* Clear floats after the columns */
+		.row:after {
+		  content: "";
+		  display: table;
+		  clear: both;
+		}
+	</style>
 </head>
 <body>
-	<form action="/" method="POST" enctype="multipart/form-data">
-        <input type="file" name="image" accept="image/*">
-        <button type="submit">Submit</button>
-	</form>
+	<div class="row">
+		<form action="/" method="POST" enctype="multipart/form-data">
+			<input type="file" name="image" accept="image/*">
+			<button type="submit">Submit</button>
+		</form>
+	</div>
 </body>
 </html>

@@ -1,12 +1,16 @@
-import requests
-from ui.lib.forms import ImageForm
 from flask import Flask, render_template, request
 from flask_cors import CORS
+import simplejson as json
+from sys import path
+path.append('../')
+from lib.forms import ImageForm
+from lib.send_image import UIImageSender
 
 app = Flask(__name__)
 app.secret_key = 'lkasjdfi3jeofiwjfowflmksfdsoifjsi#@$%@%#$%'
 CORS(app)
 CLASSIFIER_API = 'http://0.0.0.0:9998/'
+RABBIT_HOST = 'localhost'
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -14,8 +18,8 @@ def home():
     form = ImageForm()
     if request.method == 'POST':
         image_file = form.image.data
-        classifications = requests.post(url=CLASSIFIER_API, files={'media': image_file})
-        return render_template('show.html', classifications=classifications.content)
+        result = UIImageSender(host=RABBIT_HOST, queue_name='img_classifier').call(image_f=image_file)
+        return render_template('show.html', classifications=json.loads(result))
     else:
         return render_template('home.html')
 

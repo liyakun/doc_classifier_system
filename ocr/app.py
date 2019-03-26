@@ -1,4 +1,4 @@
-from ocr.lib.ocr import OCR
+from lib.ocr import OCR
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
