@@ -1,11 +1,12 @@
 import pika
+import os
 from sys import path
 import simplejson as json
 import numpy as np
 path.append('../')
 from lib.ocr import OCR
 
-RABBIT_HOST = 'localhost'
+RABBIT_HOST = os.environ['RABBIT_HOST']
 
 
 def ocr_compute(ch, method, props, body):

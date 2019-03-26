@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from flask_cors import CORS
 import simplejson as json
+import os
 from sys import path
 path.append('../')
 from lib.forms import ImageForm
@@ -10,7 +11,7 @@ app = Flask(__name__)
 app.secret_key = 'lkasjdfi3jeofiwjfowflmksfdsoifjsi#@$%@%#$%'
 CORS(app)
 CLASSIFIER_API = 'http://0.0.0.0:9998/'
-RABBIT_HOST = 'localhost'
+RABBIT_HOST = os.environ['RABBIT_HOST']
 
 
 @app.route('/', methods=['GET', 'POST'])

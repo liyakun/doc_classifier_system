@@ -1,20 +1,28 @@
 version: "3.2"
 services:
     rabbitmq-server:
-        build: ./rabbitmq-server
-        networks:
-          - doc-classifier
+      image: rabbitmq:latest
+      ports:
+        - "4369:4369"
+        - "5671:5671"
+        - "5672:5672"
+        - "25672:25672"
+      networks:
+        - docclassifier
     ocr:
-      build: ./classifier
+      build: ./ocr
       depends_on:
         - rabbitmq-server
       tty: true
       ports:
         - "9996:9996"
       volumes:
-        - './classifier:/classifier'
+        - "./ocr:/ocr"
+        - "./lib:/ocr/lib"
+      environment:
+        - RABBIT_HOST=rabbitmq-server
       networks:
-        - doc-classifier
+        - docclassifier
 
     classifier:
       build: ./classifier
@@ -24,9 +32,12 @@ services:
       ports:
         - "9998:9998"
       volumes:
-        - './classifier:/classifier'
+        - "./classifier:/classifier"
+        - "./lib:/classifier/lib"
+      environment:
+        - RABBIT_HOST=rabbitmq-server
       networks:
-        - doc-classifier
+        - docclassifier
 
     ui:
       build: ./ui
@@ -38,14 +49,12 @@ services:
       ports:
         - "9999:9999"
       volumes:
-        - './ui:/ui'
+        - "./ui:/ui"
+        - "./lib:/ui/lib"
+      environment:
+        - RABBIT_HOST=rabbitmq-server
       networks:
-        - doc-classifier
-
-volumes:
-    classifier:
-    ocr:
-    ui:
+        - docclassifier
 
 networks:
-    doc-classifier:
+    docclassifier:

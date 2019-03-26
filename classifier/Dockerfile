@@ -1,8 +1,10 @@
-FROM ubuntu:18.04
+FROM nvidia/cuda:10.1-base
 
 RUN apt -y update \
-    && apt install python3-pip caffe-cpu caffe-cuda
+    && apt -y --no-install-recommends install python3-pip caffe-cpu
 
-RUN pip3 install flask flask_cors Pillow
+RUN apt -y install python3-setuptools
 
-CMD ["/usr/bin/python3", "/classifier/app.py"]
+RUN pip3 install flask flask_cors Pillow pika simplejson numpy
+
+CMD ["/usr/bin/python3", "/classifier/classifier_mq.py"]

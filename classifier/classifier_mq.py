@@ -1,4 +1,5 @@
 import pika
+import os
 from sys import path
 import simplejson as json
 import numpy as np
@@ -9,7 +10,7 @@ from lib.classifier import Classifier
 CAFFE_MODEL = path[0] + '/models/caffe_alexnet_train_iter_20000.caffemodel'
 DEPLOY_FILE = path[0] + '/models/deploy.prototxt'
 LABELS_FILE = path[0] + '/models/labels.txt'
-RABBIT_HOST = 'localhost'
+RABBIT_HOST = os.environ['RABBIT_HOST']
 
 
 def image_classifier(ch, method, props, body):
@@ -21,7 +22,7 @@ def image_classifier(ch, method, props, body):
                                deploy_file=DEPLOY_FILE,
                                image_file=image,
                                labels_file=LABELS_FILE,
-                               use_gpu=True)
+                               use_gpu=False)
     ch.basic_publish(exchange='',
                      routing_key=props.reply_to,
                      properties=pika.BasicProperties(correlation_id=props.correlation_id),
@@ -30,7 +31,7 @@ def image_classifier(ch, method, props, body):
     print(text)
 
 
-connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+connection = pika.BlockingConnection(pika.ConnectionParameters(RABBIT_HOST))
 channel = connection.channel()
 channel.queue_declare(queue='img_classifier')
 channel.basic_consume(image_classifier, queue='img_classifier', no_ack=False)
