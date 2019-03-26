@@ -59,8 +59,10 @@ You could use the provided bash script to deploy the three components.
     ```bash
     sh run.sh
     ```
+4. access ui running at http://localhost:9999/ to upload image
 
 #### References
-1. https://github.com/NVIDIA/DIGITS
-2. https://deshanadesai.github.io/notes/Finetuning-ImageNet
-3. http://adilmoujahid.com/posts/2016/06/introduction-deep-learning-python-caffe/
+1. https://www.rabbitmq.com/getstarted.html
+2. https://github.com/NVIDIA/DIGITS
+3. https://deshanadesai.github.io/notes/Finetuning-ImageNet
+4. http://adilmoujahid.com/posts/2016/06/introduction-deep-learning-python-caffe/
