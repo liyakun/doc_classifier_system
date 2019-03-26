@@ -59,3 +59,8 @@ You could use the provided bash script to deploy the three components.
     ```bash
     sh run.sh
     ```
+
+#### References
+1. https://github.com/NVIDIA/DIGITS
+2. https://deshanadesai.github.io/notes/Finetuning-ImageNet
+3. http://adilmoujahid.com/posts/2016/06/introduction-deep-learning-python-caffe/
