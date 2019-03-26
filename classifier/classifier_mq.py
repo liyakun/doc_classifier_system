@@ -1,5 +1,6 @@
 import pika
 import os
+from retrying import retry
 from sys import path
 import simplejson as json
 import numpy as np
@@ -30,8 +31,12 @@ def image_classifier(ch, method, props, body):
     ch.basic_ack(delivery_tag=method.delivery_tag)
     print(text)
 
+@retry(stop_max_delay=300000)
+def get_connection():
+    return pika.BlockingConnection(pika.ConnectionParameters(RABBIT_HOST))
 
-connection = pika.BlockingConnection(pika.ConnectionParameters(RABBIT_HOST))
+
+connection = get_connection()
 channel = connection.channel()
 channel.queue_declare(queue='img_classifier')
 channel.basic_consume(image_classifier, queue='img_classifier', no_ack=False)

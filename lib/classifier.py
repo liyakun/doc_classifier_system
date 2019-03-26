@@ -61,6 +61,9 @@ class Classifier:
 
     @staticmethod
     def generate_rgb(img_file):
+        """
+        Generate a 3 channel image 
+        """
         return np.stack((np.array(img_file),) * 3, axis=-1)
 
     @staticmethod
@@ -102,6 +105,5 @@ class Classifier:
         classification_results = ''
         for index, classification in enumerate(classifications):
             for label, confidence in classification:
-                classification_results += '{:9.4%} - "{}"'.format(confidence / 100.0, label)
-                classification_results += '\n'
+                classification_results += '{:9.4%} - "{}"\n'.format(confidence / 100.0, label)
         return classification_results

@@ -5,6 +5,6 @@ RUN apt -y update \
 
 RUN apt -y install python3-setuptools
 
-RUN pip3 install flask flask_cors Pillow pika simplejson numpy
+RUN pip3 install flask flask_cors Pillow pika simplejson numpy retrying
 
 CMD ["/usr/bin/python3", "/classifier/classifier_mq.py"]

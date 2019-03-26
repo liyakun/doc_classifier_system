@@ -5,6 +5,6 @@ RUN apt -y update \
 
 RUN apt -y install python3-setuptools
 
-RUN pip3 install flask flask_cors Pillow pika simplejson numpy pytesseract
+RUN pip3 install flask flask_cors Pillow pika simplejson numpy pytesseract retrying
 
 CMD ["/usr/bin/python3", "/ocr/ocr_mq.py"]
