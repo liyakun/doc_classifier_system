@@ -49,7 +49,7 @@ class UIImageSender(ImageSender):
 
 class OCRImageSender(ImageSender):
 
-    def call(self, image_f):
+    def call(self, image_f, out_que):
         self.corr_id = str(uuid.uuid4())
         self.channel.basic_publish(exchange='',
                                    routing_key=self.send_queue_name,
@@ -60,6 +60,6 @@ class OCRImageSender(ImageSender):
                                    body=image_f)
         while self.response is None:
             self.connection.process_data_events()
-        return self.response
+        out_que.put(self.response)
 
 

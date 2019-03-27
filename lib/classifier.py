@@ -67,7 +67,7 @@ class Classifier:
         return np.stack((np.array(img_file),) * 3, axis=-1)
 
     @staticmethod
-    def classify(caffemodel, deploy_file, image_file, labels_file=None, use_gpu=True):
+    def classify(caffemodel, deploy_file, image_file, labels_file=None, use_gpu=True, classify_out_que=None):
         """
         Classify some images against a Caffe model and print the results
 
@@ -106,4 +106,4 @@ class Classifier:
         for index, classification in enumerate(classifications):
             for label, confidence in classification:
                 classification_results += '{:9.4%} - "{}"\n'.format(confidence / 100.0, label)
-        return classification_results
+        classify_out_que.put(classification_results)

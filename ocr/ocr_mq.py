@@ -28,9 +28,10 @@ def get_connection():
     return pika.BlockingConnection(pika.ConnectionParameters(RABBIT_HOST))
 
 
-connection = get_connection()
-channel = connection.channel()
-channel.queue_declare(queue='ocr_image')
-channel.basic_consume(ocr_compute, queue='ocr_image', no_ack=False)
-print(' [*] Waiting for messages. To exit press CTRL+C')
-channel.start_consuming()
+if __name__ == '__main__':
+    connection = get_connection()
+    channel = connection.channel()
+    channel.queue_declare(queue='ocr_image')
+    channel.basic_consume(ocr_compute, queue='ocr_image', no_ack=False)
+    print(' [*] Waiting for messages. To exit press CTRL+C')
+    channel.start_consuming()
