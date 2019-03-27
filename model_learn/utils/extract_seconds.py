@@ -3,6 +3,7 @@ import datetime
 import os
 import sys
 
+
 def extract_datetime_from_line(line, year):
     # Expected format: I0210 13:39:22.381027 25210 solver.cpp:204] Iteration 100, lr = 0.00992565
     line = line.strip().split()
@@ -64,6 +65,7 @@ def extract_seconds(input_file, output_file):
             elapsed_seconds = (dt - start_datetime).total_seconds()
             out.write('%f\n' % elapsed_seconds)
     out.close()
+
 
 if __name__ == '__main__':
     if len(sys.argv) < 3:

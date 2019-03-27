@@ -15,6 +15,7 @@ The plotted confusion matrix could be found at `model_learn/confs/utils/data_res
 * download images
 * download pre-trained AlexNet model
 * prepare data using jupyter-notebook `model_learn/confs/utils/data_result_analysis.ipynb`
+  * `data_result_analysis.ipynb` under `model_learn/confs/utils/` is developed by me, other files under this folder are mainly taken from official caffe github repository.
 * retrain model using `model_learn/confs/pixel_mean_sub_shuffle/train.sh`
 
 The provided `model_learn/downloader.sh` could be used to download images and model.
