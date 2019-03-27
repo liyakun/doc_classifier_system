@@ -7,13 +7,16 @@ The `model_learn` folder contains the necessary tools to train a document classi
 
 A deep neural network (dnn) machine learning model was trained to classify documents. The model was trained by fine tuning available trained AlexNet dnn model.
 
+You could find training log file at `doc_classifier_system/model_learn/confs/pixel_mean_sub_shuffle/training.log`. 
+The plotted confusion matrix could be found at `model_learn/confs/utils/data_result_analysis.ipynb`.
+
+
 ###### Steps to reproduce
 * download images
 * download pre-trained AlexNet model
 * prepare data using jupyter-notebook `model_learn/confs/utils/data_result_analysis.ipynb`
 * retrain model using `model_learn/confs/pixel_mean_sub_shuffle/train.sh`
 
-You could have a look at the training result at `model_learn/confs/utils/data_result_analysis.ipynb`. 
 The provided `model_learn/downloader.sh` could be used to download images and model.
 
 ##### UI
