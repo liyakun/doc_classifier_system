@@ -15,7 +15,7 @@ The plotted confusion matrix could be found at `model_learn/confs/utils/data_res
 * download images
 * download pre-trained AlexNet model
 * prepare data using jupyter-notebook `model_learn/confs/utils/data_result_analysis.ipynb`
-  * `data_result_analysis.ipynb` under `model_learn/confs/utils/` is developed by me, other files under this folder are mainly taken from official caffe github repository.
+  * `data_result_analysis.ipynb` under `model_learn/confs/utils/` is developed by me, other files under this folder are mainly taken from official caffe github repository for processing training log.
 * retrain model using `model_learn/confs/pixel_mean_sub_shuffle/train.sh`
 
 The provided `model_learn/downloader.sh` could be used to download images and model.
@@ -43,9 +43,9 @@ The `classifier` provides the following functionality:
 * receive image from `ui`
 * return classification results to `ui`
 
-#### Deployment
+#### Deployment of the complete system
 
-The deployment is done through docker, therefore, it is required to have docker and docker-compose installed.
+The deployment is done by using docker, therefore, it is required to have docker and docker-compose installed.
 You could use the provided bash script to deploy the three components.
 
 1. clone the repository
@@ -62,7 +62,7 @@ You could use the provided bash script to deploy the three components.
     ```bash
     sh run.sh
     ```
-4. access ui running at http://localhost:9999/ to upload image
+4. access ui running at http://localhost:9999/ to upload image and check returned result
 
 #### References
 1. https://www.rabbitmq.com/getstarted.html
