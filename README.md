@@ -46,7 +46,7 @@ The `classifier` provides the following functionality:
 #### Deployment of the complete system
 
 The deployment is done by using docker, therefore, it is required to have docker and docker-compose installed.
-You could use the provided bash script to deploy the three components.
+You could use the provided bash script to deploy the UI, OCR and Classifier components.
 
 1. clone the repository
     ```bash
