@@ -5,8 +5,7 @@
 ##### Model Training
 The `model_learn` folder contains the necessary tools to train a document classifier.
 
-A trained deep neural network (dnn) machine learning model was trained to classify documents
-The model was trained by fine tuning available train AlexNet dnn model.
+A deep neural network (dnn) machine learning model was trained to classify documents. The model was trained by fine tuning available trained AlexNet dnn model.
 
 ###### Steps to reproduce
 * download images
