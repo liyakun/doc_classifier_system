@@ -1,10 +1,10 @@
-FROM nvidia/cuda:10.1-base
+FROM ubuntu:18.04
+
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt -y update \
-    && apt -y --no-install-recommends install python3-pip caffe-cpu
+    && apt install -y tesseract-ocr libtesseract-dev python3-pip caffe-cpu python3-setuptools python3-dev
 
-RUN apt -y install python3-setuptools
-
-RUN pip3 install flask flask_cors Pillow pika simplejson numpy retrying
+RUN pip3 install flask flask_cors Pillow pika==0.13.1 simplejson numpy retrying pytesseract datefinder isbnlib
 
 CMD ["/usr/bin/python3", "/classifier/classifier_mq.py"]
