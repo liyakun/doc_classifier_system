@@ -1,22 +1,20 @@
 import pika
 import os
-from sys import path
-from retrying import retry
-import simplejson as json
 import numpy as np
-path.append('../')
+import simplejson as json
 from lib.ocr import OCR
+from lib.rabbitmq_connect import RabbitServerConnector
 
 RABBIT_HOST = os.environ['RABBIT_HOST']
 
 
 def ocr_compute(ch, method, props, body):
     """
-    Get content on image
-    :param ch: connection channel
-    :param method:
-    :param props:
-    :param body: json dumps received
+    call back function return return ocr result
+    :param ch: channel
+    :param method: meta info for message delivery
+    :param props: properties of message
+    :param body: content
     """
     text = None
     try:
@@ -32,17 +30,8 @@ def ocr_compute(ch, method, props, body):
     print(" send ocr result ")
 
 
-@retry(stop_max_delay=300000)
-def get_connection():
-    """
-    used in docker environment, to prevent RabbitMQ service is not ready while connecting
-    :return: connection to rabbitmq server
-    """
-    return pika.BlockingConnection(pika.ConnectionParameters(RABBIT_HOST))
-
-
 if __name__ == '__main__':
-    connection = get_connection()
+    connection = RabbitServerConnector.get_connection(rabbit_host=RABBIT_HOST)
     channel = connection.channel()
     channel.queue_declare(queue='ocr_image')
     channel.basic_consume(ocr_compute, queue='ocr_image', no_ack=False)

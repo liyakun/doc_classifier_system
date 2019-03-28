@@ -1,14 +1,14 @@
 import os
 import pika
-from retrying import retry
-from threading import Thread
 import queue
-from sys import path
-import simplejson as json
 import numpy as np
-from lib.send_image import OCRImageSender
-from lib.classifier import Classifier
+import simplejson as json
+from sys import path
+from threading import Thread
 from lib.ocr import OCR
+from lib.classifier import Classifier
+from lib.send_image import OCRImageSender
+from lib.rabbitmq_connect import RabbitServerConnector
 
 CAFFE_MODEL = path[0] + '/models/caffe_alexnet_train_iter_20000.caffemodel'
 DEPLOY_FILE = path[0] + '/models/deploy.prototxt'
@@ -17,6 +17,13 @@ RABBIT_HOST = os.environ['RABBIT_HOST']
 
 
 def image_classifier(ch, method, props, body):
+    """
+    call back function return return classification and ocr result
+    :param ch: channel
+    :param method: meta info for message delivery
+    :param props: properties of message
+    :param body: content
+    """
     print('Image received for classification.')
     # start thread for ocr
     ocr_out_que = queue.Queue()
@@ -24,7 +31,6 @@ def image_classifier(ch, method, props, body):
                         args=(body, ocr_out_que))
     ocr_thread.start()
     # reconstruct image
-    image = None
     try:
         image = np.array(json.loads(body)['data'], np.uint8).reshape(json.loads(body)['shape'])
     except KeyError:
@@ -53,17 +59,8 @@ def image_classifier(ch, method, props, body):
     print(classify_result)
 
 
-@retry(stop_max_delay=300000)
-def get_connection():
-    """
-    used in docker environment, to prevent RabbitMQ service is not ready while connecting
-    :return: connection to rabbitmq server
-    """
-    return pika.BlockingConnection(pika.ConnectionParameters(RABBIT_HOST))
-
-
 if __name__ == '__main__':
-    connection = get_connection()
+    connection = RabbitServerConnector.get_connection(RABBIT_HOST)
     channel = connection.channel()
     channel.queue_declare(queue='img_classifier')
     channel.basic_consume(image_classifier, queue='img_classifier', no_ack=False)

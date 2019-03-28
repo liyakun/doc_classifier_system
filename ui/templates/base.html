@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+    <style>
+		* {
+		  box-sizing: border-box;
+		}
+		.div-center {
+          margin: 15;
+          align:center;
+          text-align: center;
+        }
+        .back-button {
+          float: left;
+        }
+        .header {
+          margin: 0;
+          display: inline-block;
+        }
+		.column {
+		  float: left;
+		  width: 50%;
+		  padding: 10px;
+		}
+		.row:after {
+		  content: "";
+		  display: table;
+		  clear: both;
+		}
+		#content {
+            width: 1000px;
+            margin: 0 auto;
+        }
+	</style>
+    <title>Document Classifier</title>
+    {% endblock %}
+</head>
+<body>
+    <div id="content">{% block content %}{% endblock %}</div>
+</body>
+</html>
